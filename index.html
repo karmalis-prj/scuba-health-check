@@ -3,621 +3,433 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>스쿠버다이빙 건강 적합성 자가진단 | DMSC 공식 기준</title>
+<title>스쿠버다이빙 건강 자가진단 | DMSC 2026 최신 기준</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-
-:root{
-  --deep:#0a2540;--mid:#1a4a7a;--light:#2d7dd2;
-  --safe:#1a8a4a;--warn:#d47e00;--danger:#c0392b;
-  --text:#1a2535;--muted:#5a7a9a;--border:#c5ddf5;--bg:#f0f6fc;
-}
-
-body{font-family:'Noto Sans KR',sans-serif;background:var(--deep);color:var(--text);min-height:100vh}
-
-.ocean-bg{position:fixed;inset:0;background:linear-gradient(180deg,#0a2540 0%,#1a4a7a 50%,#0d3358 100%);z-index:0}
-.wave{position:absolute;width:200%;height:160px;background:rgba(255,255,255,0.025);border-radius:50%;animation:wave 10s infinite ease-in-out}
-.wave:nth-child(2){animation-delay:-4s;animation-duration:13s;opacity:.5;top:30%}
-.wave:nth-child(3){animation-delay:-7s;animation-duration:16s;opacity:.3;top:60%}
-@keyframes wave{0%,100%{transform:translateX(-25%) translateY(0)}50%{transform:translateX(-25%) translateY(-20px)}}
-.bubbles{position:fixed;bottom:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
-.bubble{position:absolute;bottom:-20px;border-radius:50%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);animation:rise linear infinite}
-@keyframes rise{0%{transform:translateY(0);opacity:.6}100%{transform:translateY(-100vh);opacity:0}}
-
-.container{position:relative;z-index:1;max-width:700px;margin:0 auto;padding:40px 20px 100px}
-
-.header{text-align:center;margin-bottom:32px}
-.dive-icon{font-size:52px;display:block;margin-bottom:14px;animation:float 3s ease-in-out infinite;filter:drop-shadow(0 0 16px rgba(45,125,210,.8))}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
-.header h1{font-size:20px;font-weight:700;color:#fff;line-height:1.4;margin-bottom:6px}
-.header p{font-size:12px;color:rgba(255,255,255,.5);line-height:1.6}
-.badge-row{display:flex;gap:8px;justify-content:center;margin-top:10px;flex-wrap:wrap}
-.badge{padding:3px 11px;border-radius:20px;font-size:11px;font-weight:600}
-.badge-blue{background:rgba(45,125,210,.2);border:1px solid rgba(45,125,210,.4);color:#7bbff5}
-.badge-green{background:rgba(26,138,74,.2);border:1px solid rgba(26,138,74,.4);color:#6fcf97}
-
-/* 진행 */
-.progress-wrap{margin-bottom:20px}
-.prog-label{display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.45);margin-bottom:6px}
-.prog-bar{background:rgba(255,255,255,.1);border-radius:4px;height:5px;overflow:hidden}
-.prog-fill{height:100%;background:linear-gradient(90deg,var(--light),#5ba8f5);border-radius:4px;transition:width .3s ease;width:0}
-
-/* 단계 표시 */
-.step-indicator{display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:24px}
-.step-dot{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;transition:all .3s}
-.step-dot.active{background:var(--light);color:#fff;box-shadow:0 0 12px rgba(45,125,210,.5)}
-.step-dot.done{background:var(--safe);color:#fff}
-.step-dot.inactive{background:rgba(255,255,255,.15);color:rgba(255,255,255,.4)}
-.step-line{width:40px;height:2px;background:rgba(255,255,255,.2)}
-.step-line.done{background:var(--safe)}
-.step-label{font-size:10px;color:rgba(255,255,255,.4);text-align:center;margin-top:4px}
-.step-wrap{display:flex;flex-direction:column;align-items:center;gap:4px}
-
-.card{background:rgba(255,255,255,.97);border-radius:16px;padding:22px;margin-bottom:14px;box-shadow:0 6px 28px rgba(0,0,0,.28)}
-
-.section-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:12px;border-bottom:2px solid var(--border)}
-.sec-icon{font-size:20px}
-.sec-title{font-size:14px;font-weight:700;color:var(--mid);flex:1}
-.sec-badge{font-size:11px;color:var(--muted);background:var(--bg);padding:2px 8px;border-radius:10px}
-
-.question{display:flex;align-items:flex-start;justify-content:space-between;padding:12px 0;border-bottom:1px solid #f0f4f8;gap:14px}
-.question:last-child{border-bottom:none;padding-bottom:0}
-.q-num{font-size:12px;font-weight:700;color:var(--light);flex-shrink:0;margin-top:2px;min-width:20px}
-.q-text{font-size:13px;color:var(--text);line-height:1.6;flex:1}
-.q-text b{color:var(--mid)}
-.q-sub{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.5}
-
-.toggle{flex-shrink:0;margin-top:2px}
-.toggle input{display:none}
-.toggle label{display:flex;align-items:center;width:52px;height:26px;background:#dde5f0;border-radius:13px;cursor:pointer;transition:background .22s;position:relative}
-.toggle label::after{content:'';position:absolute;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.18);transition:transform .22s}
-.toggle input:checked+label{background:var(--light)}
-.toggle input:checked+label::after{transform:translateX(26px)}
-
-/* 연령 */
-.age-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
-.age-btn{padding:11px;border-radius:9px;border:2px solid var(--border);background:#fff;font-size:13px;color:var(--text);cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:all .18s;font-weight:500;text-align:center}
-.age-btn:hover{border-color:var(--light);color:var(--light)}
-.age-btn.active{background:var(--light);border-color:var(--light);color:#fff}
-
-/* 임신 경고 */
-.preg-note{background:#fff5f5;border:1px solid #fcd5d5;border-radius:8px;padding:10px 14px;margin-bottom:12px;font-size:12px;color:#8b2020;line-height:1.6}
-
-/* 2단계 BOX */
-.box-card{background:rgba(255,255,255,.97);border-radius:16px;padding:22px;margin-bottom:14px;box-shadow:0 6px 28px rgba(0,0,0,.28);border-left:4px solid var(--warn)}
-.box-title{font-size:13px;font-weight:700;color:var(--warn);margin-bottom:4px}
-.box-desc{font-size:12px;color:var(--muted);margin-bottom:14px;line-height:1.5}
-.box-items{list-style:none}
-.box-items li{font-size:13px;color:var(--text);padding:5px 0;border-bottom:1px solid #f0f4f8;display:flex;gap:8px;line-height:1.5}
-.box-items li:last-child{border-bottom:none}
-.box-items li::before{content:'▸';color:var(--warn);flex-shrink:0;margin-top:1px}
-
-/* 버튼 */
-.btn-primary{width:100%;padding:15px;background:linear-gradient(135deg,var(--light),var(--mid));color:#fff;font-size:15px;font-weight:700;border:none;border-radius:12px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;box-shadow:0 4px 18px rgba(45,125,210,.4);transition:all .2s;letter-spacing:.3px;margin-top:6px}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 22px rgba(45,125,210,.5)}
-.btn-secondary{width:100%;padding:13px;background:transparent;border:2px solid rgba(255,255,255,.3);color:rgba(255,255,255,.8);font-size:14px;font-weight:600;border-radius:12px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:all .2s;margin-top:10px}
-.btn-secondary:hover{border-color:rgba(255,255,255,.6);color:#fff}
-
-/* 결과 */
-.result-card{background:rgba(255,255,255,.97);border-radius:20px;padding:32px 24px;text-align:center;box-shadow:0 8px 40px rgba(0,0,0,.35)}
-.result-icon{font-size:64px;display:block;margin-bottom:16px}
-.result-title{font-size:22px;font-weight:700;margin-bottom:8px}
-.result-sub{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:22px}
-
-.result-box{background:var(--bg);border-radius:10px;padding:16px;text-align:left;margin-bottom:14px}
-.result-box h4{font-size:12px;font-weight:700;color:var(--mid);margin-bottom:10px;text-transform:uppercase;letter-spacing:.4px}
-.result-box ul{list-style:none}
-.result-box ul li{font-size:13px;color:var(--text);padding:4px 0;display:flex;gap:8px;line-height:1.5}
-.result-box ul li::before{content:'•';color:var(--light);flex-shrink:0;margin-top:2px}
-
-.warn-box{background:#fff8ec;border-left:3px solid var(--warn);border-radius:0 10px 10px 0;padding:14px 16px;text-align:left;margin-bottom:14px}
-.warn-box h4{font-size:12px;font-weight:700;color:var(--warn);margin-bottom:8px}
-.warn-box ul{list-style:none}
-.warn-box ul li{font-size:13px;color:#7a4a00;padding:3px 0;display:flex;gap:6px;line-height:1.5}
-.warn-box ul li::before{content:'▸';color:var(--warn);flex-shrink:0}
-
-.disclaimer{font-size:11px;color:var(--muted);line-height:1.7;padding-top:14px;border-top:1px solid var(--border);text-align:center}
-.retry-btn{display:inline-block;padding:11px 28px;background:transparent;border:2px solid var(--light);color:var(--light);border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:all .2s;margin-top:14px}
-.retry-btn:hover{background:var(--light);color:#fff}
-
-/* 화면 전환 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans KR',sans-serif;background:#0a2540;min-height:100vh;padding:32px 16px 80px}
+.wrap{max-width:680px;margin:0 auto}
+.hd{text-align:center;margin-bottom:28px;color:#fff}
+.hd-icon{font-size:48px;display:block;margin-bottom:10px}
+.hd h1{font-size:19px;font-weight:700;line-height:1.4;margin-bottom:5px}
+.hd p{font-size:12px;color:rgba(255,255,255,.5)}
+.badges{display:flex;gap:7px;justify-content:center;margin-top:8px;flex-wrap:wrap}
+.b{padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(45,125,210,.2);border:1px solid rgba(45,125,210,.4);color:#7bbff5}
+.b2{background:rgba(26,138,74,.2);border:1px solid rgba(26,138,74,.4);color:#6fcf97}
+.card{background:#fff;border-radius:14px;padding:20px;margin-bottom:12px;box-shadow:0 4px 20px rgba(0,0,0,.25)}
+.card-warn{border-left:4px solid #d47e00}
+.sh{display:flex;align-items:center;gap:8px;margin-bottom:14px;padding-bottom:10px;border-bottom:2px solid #c5ddf5}
+.sh-icon{font-size:18px}
+.sh-title{font-size:14px;font-weight:700;color:#1a4a7a;flex:1}
+.sh-badge{font-size:11px;color:#5a7a9a;background:#f0f6fc;padding:2px 7px;border-radius:10px}
+.qrow{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid #f0f4f8}
+.qrow:last-child{border:none;padding-bottom:0}
+.qn{font-size:12px;font-weight:700;color:#2d7dd2;flex-shrink:0;margin-top:2px;min-width:18px}
+.qb{flex:1}
+.qt{font-size:13px;color:#1a2535;line-height:1.55}
+.qt b{color:#1a4a7a}
+.qh{font-size:11px;color:#5a7a9a;margin-top:3px;line-height:1.5}
+.tg{flex-shrink:0;margin-top:2px}
+.tg input{display:none}
+.tg label{display:block;width:48px;height:24px;background:#dde5f0;border-radius:12px;cursor:pointer;position:relative;transition:background .2s}
+.tg label::after{content:'';position:absolute;left:3px;top:3px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:transform .2s}
+.tg input:checked+label{background:#2d7dd2}
+.tg input:checked+label::after{transform:translateX(24px)}
+.pnote{background:#fff5f5;border:1px solid #fcd5d5;border-radius:8px;padding:9px 12px;margin-bottom:10px;font-size:12px;color:#8b2020;line-height:1.6}
+.btn{width:100%;padding:14px;border:none;border-radius:11px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;margin-top:8px;transition:all .2s}
+.btn-blue{background:#2d7dd2;color:#fff;box-shadow:0 3px 14px rgba(45,125,210,.4)}
+.btn-blue:hover{background:#1a6bbf;transform:translateY(-1px)}
+.btn-ghost{background:transparent;border:2px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);font-size:13px;padding:11px;margin-top:6px}
+.btn-ghost:hover{border-color:rgba(255,255,255,.5);color:#fff}
 .screen{display:none}
-.screen.active{display:block}
-
-@media(max-width:480px){
-  .container{padding:24px 14px 70px}
-  .card,.box-card{padding:18px 14px}
-  .header h1{font-size:18px}
-  .step-line{width:24px}
-}
+.screen.on{display:block}
+.rc{background:#fff;border-radius:18px;padding:30px 22px;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,.3)}
+.ri{font-size:58px;display:block;margin-bottom:14px}
+.rt{font-size:21px;font-weight:700;margin-bottom:7px}
+.rs{font-size:13px;color:#5a7a9a;line-height:1.7;margin-bottom:20px}
+.rbox{background:#f0f6fc;border-radius:9px;padding:14px;text-align:left;margin-bottom:12px}
+.rbox h4{font-size:11px;font-weight:700;color:#1a4a7a;margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px}
+.rbox ul{list-style:none}
+.rbox li{font-size:13px;color:#1a2535;padding:3px 0;display:flex;gap:7px;line-height:1.5}
+.rbox li::before{content:'•';color:#2d7dd2;flex-shrink:0;margin-top:2px}
+.wbox{background:#fff8ec;border-left:3px solid #d47e00;border-radius:0 9px 9px 0;padding:12px 14px;text-align:left;margin-bottom:12px}
+.wbox h4{font-size:11px;font-weight:700;color:#d47e00;margin-bottom:7px;text-transform:uppercase}
+.wbox ul{list-style:none}
+.wbox li{font-size:13px;color:#7a4a00;padding:3px 0;display:flex;gap:6px;line-height:1.5}
+.wbox li::before{content:'▸';color:#d47e00;flex-shrink:0}
+.disc{font-size:11px;color:#5a7a9a;line-height:1.7;padding-top:12px;border-top:1px solid #c5ddf5;text-align:center}
+.retry{display:inline-block;padding:10px 24px;background:transparent;border:2px solid #2d7dd2;color:#2d7dd2;border-radius:9px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Noto Sans KR',sans-serif;margin-top:12px;transition:all .2s}
+.retry:hover{background:#2d7dd2;color:#fff}
 </style>
 </head>
 <body>
+<div class="wrap">
 
-<div class="ocean-bg">
-  <div class="wave"></div><div class="wave"></div><div class="wave"></div>
+<div class="hd">
+  <span class="hd-icon">🤿</span>
+  <h1>스쿠버다이빙 건강 적합성<br>자가진단 체크리스트</h1>
+  <p>DMSC 공식 기준 (UHMS · DAN · UCSD 공동제정)</p>
+  <div class="badges">
+    <span class="b">PADI · NAUI 동일 적용</span>
+    <span class="b b2">2026-01-01 최신판</span>
+  </div>
 </div>
-<div class="bubbles" id="bubbles"></div>
 
-<div class="container">
+<!-- ===== STEP 1 ===== -->
+<div class="screen on" id="s1">
 
-  <div class="header">
-    <span class="dive-icon">🤿</span>
-    <h1>스쿠버다이빙 건강 적합성<br>자가진단 체크리스트</h1>
-    <p>DMSC 공식 의학 스크리닝 기준 (UHMS · DAN · UCSD 공동제정)</p>
-    <div class="badge-row">
-      <span class="badge badge-blue">공식 기준 2022</span>
-      <span class="badge badge-green">PADI · NAUI 동일 적용</span>
+  <div class="card">
+    <div class="sh"><span class="sh-icon">⚠️</span><span class="sh-title">여성 해당자</span></div>
+    <div class="pnote">임신 중이거나 임신을 시도 중인 경우 다이빙하지 마십시오.<br>(DMSC 원문: "If you are pregnant, or attempting to become pregnant, do not dive.")</div>
+    <div class="qrow">
+      <span class="qn">—</span>
+      <div class="qb"><div class="qt">현재 임신 중이거나 임신을 시도 중이다</div></div>
+      <div class="tg"><input type="checkbox" id="p1"><label for="p1"></label></div>
     </div>
   </div>
 
-  <!-- 단계 표시 -->
-  <div class="step-indicator" id="step-indicator">
-    <div class="step-wrap">
-      <div class="step-dot active" id="dot1">1</div>
-      <div class="step-label">기본검사</div>
+  <div class="card">
+    <div class="sh"><span class="sh-icon">📋</span><span class="sh-title">기본 건강 항목</span><span class="sh-badge">10개</span></div>
+
+    <div class="qrow">
+      <span class="qn">1</span>
+      <div class="qb"><div class="qt">폐·호흡·심장·혈액 문제로 정상적인 신체·정신 활동에 지장을 받은 적 있다</div></div>
+      <div class="tg"><input type="checkbox" id="q1"><label for="q1"></label></div>
     </div>
-    <div class="step-line" id="line1"></div>
-    <div class="step-wrap">
-      <div class="step-dot inactive" id="dot2">2</div>
-      <div class="step-label">세부확인</div>
+    <div class="qrow">
+      <span class="qn">2</span>
+      <div class="qb">
+        <div class="qt"><b>45세 이상</b>이다</div>
+        <div class="qh">해당 시 추가 항목 자동 표시됨</div>
+      </div>
+      <div class="tg"><input type="checkbox" id="q2"><label for="q2"></label></div>
     </div>
-    <div class="step-line" id="line2"></div>
-    <div class="step-wrap">
-      <div class="step-dot inactive" id="dot3">3</div>
-      <div class="step-label">결과</div>
+    <div class="qrow">
+      <span class="qn">3</span>
+      <div class="qb">
+        <div class="qt">보통 수준의 운동이 <b>불가능</b>하다</div>
+        <div class="qh">1.6km 14분 내 보행 또는 200m 수영 무휴식 불가<br>또는 최근 12개월 내 건강 이유로 정상 활동 불가</div>
+      </div>
+      <div class="tg"><input type="checkbox" id="q3"><label for="q3"></label></div>
+    </div>
+    <div class="qrow">
+      <span class="qn">4</span>
+      <div class="qb"><div class="qt">눈·귀·비강·부비동 <b>또는 치아</b> 관련 문제가 있다</div></div>
+      <div class="tg"><input type="checkbox" id="q4"><label for="q4"></label></div>
+    </div>
+    <div class="qrow">
+      <span class="qn">5</span>
+      <div class="qb">
+        <div class="qt">최근 12개월 내 수술을 받았다</div>
+        <div class="qh">또는 과거 수술로 인한 현재 진행 중인 문제가 있다</div>
+      </div>
+      <div class="tg"><input type="checkbox" id="q5"><label for="q5"></label></div>
+    </div>
+    <div class="qrow">
+      <span class="qn">6</span>
+      <div class="qb">
+        <div class="qt">의식 소실·편두통·발작·뇌졸중·중증 두부손상 경험이 있다</div>
+        <div class="qh">또는 지속적 신경계 손상·질환이 있다<br>또는 갑작스런 신경학적 손상·장애가 발생할 수 있는 상태이다</div>
+      </div>
+      <div class="tg"><input type="checkbox" id="q6"><label for="q6"></label></div>
+    </div>
+    <div class="qrow">
+      <span class="qn">7</span>
+      <div class="qb">
+        <div class="qt">심리·인격·공황·약물·알코올 문제로 최근 5년 내 치료를 받았다</div>
+        <div class="qh">또는 학습·발달 장애 진단을 받은 적 있다</div>
+      </div>
+      <div class="tg"><input type="checkbox" id="q7"><label for="q7"></label></div>
+    </div>
+    <div class="qrow">
+      <span class="qn">8</span>
+      <div class="qb"><div class="qt">허리 문제·탈장·궤양·당뇨가 있다</div></div>
+      <div class="tg"><input type="checkbox" id="q8"><label for="q8"></label></div>
+    </div>
+    <div class="qrow">
+      <span class="qn">9</span>
+      <div class="qb">
+        <div class="qt">위·장 문제가 있다</div>
+        <div class="qh">최근 설사 포함</div>
+      </div>
+      <div class="tg"><input type="checkbox" id="q9"><label for="q9"></label></div>
+    </div>
+    <div class="qrow">
+      <span class="qn">10</span>
+      <div class="qb">
+        <div class="qt">현재 1종 이상의 처방약을 복용 중이다</div>
+        <div class="qh">피임약·폐경기 호르몬 대체제·항말라리아제(메플로퀸/라리암 제외)는 해당 없음</div>
+      </div>
+      <div class="tg"><input type="checkbox" id="q10"><label for="q10"></label></div>
     </div>
   </div>
 
-  <!-- ── STEP 1: 기본 10개 질문 ── -->
-  <div class="screen active" id="screen1">
+  <button class="btn btn-blue" onclick="step1next()">다음 →</button>
+</div>
 
-    <div class="progress-wrap">
-      <div class="prog-label">
-        <span id="s1-counter">0 / 11 항목</span>
-        <span>1단계 · 기본 검사</span>
-      </div>
-      <div class="prog-bar"><div class="prog-fill" id="s1-prog"></div></div>
+<!-- ===== STEP 2 ===== -->
+<div class="screen" id="s2">
+  <div class="card card-warn">
+    <div class="sh"><span class="sh-icon">🔍</span><span class="sh-title">세부 항목 확인</span></div>
+    <p style="font-size:13px;color:#5a7a9a;line-height:1.6">
+      앞에서 선택한 항목의 세부 내용입니다.<br>
+      <b style="color:#1a2535">본인에게 실제로 해당하는 항목만 체크하세요.</b><br>
+      <span style="font-size:12px">하나도 해당 없으면 체크 없이 결과 확인을 누르세요 → 적합 판정</span>
+    </p>
+  </div>
+
+  <!-- BOX A: q1 -->
+  <div class="card box-a" style="display:none;border-left:4px solid #d47e00">
+    <div class="sh"><span class="sh-icon">🫁</span><span class="sh-title">BOX A — 폐·호흡기·심장·혈액</span></div>
+    <div class="qrow"><div class="qb"><div class="qt">흉부·심장·심장판막 수술 / 스텐트·심박조율기·신경자극기 등 삽입형 의료기기 / 기흉 / 만성 폐질환</div></div><div class="tg"><input type="checkbox" id="a1"><label for="a1"></label></div></div>
+    <div class="qrow"><div class="qb"><div class="qt">천식·쌕쌕거림·심한 알레르기·건초열·기도 막힘으로 신체활동 제한 (최근 12개월)</div></div><div class="tg"><input type="checkbox" id="a2"><label for="a2"></label></div></div>
+    <div class="qrow"><div class="qb"><div class="qt">협심증·운동 시 흉통·심부전·수중 폐부종·심근경색·뇌졸중 등 심장 질환 / 심장약 복용 중</div></div><div class="tg"><input type="checkbox" id="a3"><label for="a3"></label></div></div>
+    <div class="qrow"><div class="qb"><div class="qt">재발성 기관지염으로 현재 기침 중 (최근 12개월) / 폐기종 진단</div></div><div class="tg"><input type="checkbox" id="a4"><label for="a4"></label></div></div>
+    <div class="qrow"><div class="qb"><div class="qt">최근 30일 내 폐·호흡·심장·혈액 증상으로 신체·정신 활동 지장</div></div><div class="tg"><input type="checkbox" id="a5"><label for="a5"></label></div></div>
+  </div>
+
+  <!-- BOX B: q2 -->
+  <div class="card box-b" style="display:none;border-left:4px solid #d47e00">
+    <div class="sh"><span class="sh-icon">👤</span><span class="sh-title">BOX B — 45세 이상 추가 항목</span></div>
+    <div class="qrow"><div class="qb"><div class="qt">현재 흡연 중 또는 니코틴 제품 사용</div></div><div class="tg"><input type="checkbox" id="b1"><label for="b1"></label></div></div>
+    <div class="qrow"><div class="qb"><div class="qt">고콜레스테롤혈증 (고지혈증)</div></div><div class="tg"><input type="checkbox" id="b2"><label for="b2"></label></div></div>
+    <div class="qrow"><div class="qb"><div class="qt">고혈압</div></div><div class="tg"><input type="checkbox" id="b3"><label for="b3"></label></div></div>
+    <div class="qrow"><div class="qb"><div class="qt">직계 가족 중 50세 이전 돌연사·심장질환·뇌졸중 (부정맥·관상동맥질환·심근병증 포함)</div></div><div class="tg"><input type="checkbox" id="b4"><label for="b4"></label></div></div>
+  </div>
+
+  <!-- Q3 운동능력 -->
+  <div class="card box-q3" style="display:none;border-left:4px solid #d47e00">
+    <div class="sh"><span class="sh-icon">🏃</span><span class="sh-title">운동 능력 세부 확인</span></div>
+    <div class="qrow"><div class="qb"><div class="qt">1.6km(약 1마일)를 14분 내에 걷기 불가능</div></div><div class="tg"><input type="checkbox" id="e1"><label for="e1"></label></div></div>
+    <div class="qrow"><div class="qb"><div class="qt">200m 수영을 쉬지 않고 완주 불가능</div></div><div class="tg"><input type="checkbox" id="e2"><label for="e2"></label></div></div>
+    <div class="qrow"><div class="qb"><div class="qt">최근 12개월 내 건강·체력 이유로 정상 활동 참여 불가</div></div><div class="tg"><input type="checkbox" id="e3"><label for="e3"></label></div></div>
+  </div>
+
+  <!-- BOX C: q4 -->
+  <div class="card box-c" style="display:none;border-left:4px solid #d47e00">
+    <div class="sh"><span class="sh-icon">👂</span><span class="sh-title">BOX C — 귀·눈·부비동</span></div>
+    <div class="qrow"><div class="qb"><div class="qt">부비동 수술 (최근 6개월)</div></div><div class="tg"><input type="checkbox" id="c1"><label for="c1"></label></div></div>
+    <div class="qrow"><div class="qb"><div class="qt">귀 질환·귀 수술·청력손실·균형 장애</div></div><div class="tg"><input type="checkbox" id="c2"><label for="c2"></label></div></div>
+    <div class="qrow"><div class="qb"><div class="qt">재발성 부비동염 (최근 12개월)</div></div><div class="tg"><input type="checkbox" id="c3"><label for="c3"></label></div></div>
+    <div class="qrow"><div class="qb"><div class="qt">안과 수술 (최근 3개월)</div></div><div class="tg"><input type="checkbox" id="c4"><label for="c4"></label></div></div>
+    <div class="qrow" style="border-top:1px dashed #e0c590;margin-top:4px;padding-top:10px"><div class="qb"><div class="qt">최근 치과·구강 시술 후 아직 회복 중 <span style="font-size:10px;color:#a05800">(치아 관련)</span></div></div><div class="tg"><input type="checkbox" id="c5"><label for="c5"></label></div></div>
+  </div>
+
+  <!-- Q5 수술 -->
+  <div class="card box-q5" style="display:none;border-left:4px solid #d47e00">
+    <div class="sh"><span class="sh-icon">🏥</span><span class="sh-title">수술 세부 확인</span></div>
+    <div class="qrow"><div class="qb"><div class="qt">최근 12개월 내 수술 (아직 완전 회복 안 됨)</div></div><div class="tg"><input type="checkbox" id="f1"><label for="f1"></label></div></div>
+    <div class="qrow"><div class="qb"><div class="qt">과거 수술로 인한 현재 진행 중인 합병증·문제</div></div><div class="tg"><input type="checkbox" id="f2"><label for="f2"></label></div></div>
+  </div>
+
+  <!-- BOX D: q6 -->
+  <div class="card box-d" style="display:none;border-left:4px solid #d47e00">
+    <div class="sh"><span class="sh-icon">🧠</span><span class="sh-title">BOX D — 신경계</span></div>
+    <div class="qrow"><div class="qb"><div class="qt">의식 소실 동반 두부 손상 (최근 5년)</div></div><div class="tg"><input type="checkbox" id="d1"><label for="d1"></label></div></div>
+    <div class="qrow"><div class="qb"><div class="qt">지속적 신경계 손상·질환 (삽화적·예측 불가한 신경·인지·운동 기능의 소실·저하·변화 포함)</div></div><div class="tg"><input type="checkbox" id="d2"><label for="d2"></label></div></div>
+    <div class="qrow"><div class="qb"><div class="qt">재발성 편두통 (최근 12개월) / 편두통 예방약 복용</div></div><div class="tg"><input type="checkbox" id="d3"><label for="d3"></label></div></div>
+    <div class="qrow"><div class="qb"><div class="qt">실신·부분 의식 소실 (최근 5년)</div></div><div class="tg"><input type="checkbox" id="d4"><label for="d4"></label></div></div>
+    <div class="qrow"><div class="qb"><div class="qt">간질·발작·경련 / 발작 예방약 복용</div></div><div class="tg"><input type="checkbox" id="d5"><label for="d5"></label></div></div>
+  </div>
+
+  <!-- BOX E: q7 -->
+  <div class="card box-e" style="display:none;border-left:4px solid #d47e00">
+    <div class="sh"><span class="sh-icon">🧩</span><span class="sh-title">BOX E — 정신건강</span></div>
+    <div class="qrow"><div class="qb"><div class="qt">행동·정신·심리 문제로 의학적·정신과적 치료 중</div></div><div class="tg"><input type="checkbox" id="g1"><label for="g1"></label></div></div>
+    <div class="qrow"><div class="qb"><div class="qt">중증 우울증·자살 충동·공황발작·조절 안 되는 양극성 장애</div></div><div class="tg"><input type="checkbox" id="g2"><label for="g2"></label></div></div>
+    <div class="qrow"><div class="qb"><div class="qt">지속적 관리·특별 편의가 필요한 정신건강 상태 / 학습·발달 장애 진단</div></div><div class="tg"><input type="checkbox" id="g3"><label for="g3"></label></div></div>
+    <div class="qrow"><div class="qb"><div class="qt">약물·알코올 중독 치료 (최근 5년)</div></div><div class="tg"><input type="checkbox" id="g4"><label for="g4"></label></div></div>
+  </div>
+
+  <!-- BOX F: q8 -->
+  <div class="card box-f" style="display:none;border-left:4px solid #d47e00">
+    <div class="sh"><span class="sh-icon">🦴</span><span class="sh-title">BOX F — 근골격·대사</span></div>
+    <div class="qrow"><div class="qb"><div class="qt">일상 활동 제한하는 재발성 허리 문제 (최근 6개월)</div></div><div class="tg"><input type="checkbox" id="h1"><label for="h1"></label></div></div>
+    <div class="qrow"><div class="qb"><div class="qt">허리·척추 수술 (최근 12개월)</div></div><div class="tg"><input type="checkbox" id="h2"><label for="h2"></label></div></div>
+    <div class="qrow"><div class="qb"><div class="qt">약물 또는 식이 조절 당뇨 / 임신성 당뇨 (최근 12개월)</div></div><div class="tg"><input type="checkbox" id="h3"><label for="h3"></label></div></div>
+    <div class="qrow"><div class="qb"><div class="qt">신체 활동 제한하는 교정되지 않은 탈장</div></div><div class="tg"><input type="checkbox" id="h4"><label for="h4"></label></div></div>
+    <div class="qrow"><div class="qb"><div class="qt">활성·미치료 궤양·문제성 상처 / 궤양 수술 (최근 6개월)</div></div><div class="tg"><input type="checkbox" id="h5"><label for="h5"></label></div></div>
+  </div>
+
+  <!-- BOX G: q9 -->
+  <div class="card box-g" style="display:none;border-left:4px solid #d47e00">
+    <div class="sh"><span class="sh-icon">🫃</span><span class="sh-title">BOX G — 위장·소화기</span></div>
+    <div class="qrow"><div class="qb"><div class="qt">장루 수술 후 수영·신체활동 의학 허가 없음</div></div><div class="tg"><input type="checkbox" id="i1"><label for="i1"></label></div></div>
+    <div class="qrow"><div class="qb"><div class="qt">의학적 개입이 필요한 탈수 (최근 7일)</div></div><div class="tg"><input type="checkbox" id="i2"><label for="i2"></label></div></div>
+    <div class="qrow"><div class="qb"><div class="qt">활성·미치료 위·장 궤양 / 궤양 수술 (최근 6개월)</div></div><div class="tg"><input type="checkbox" id="i3"><label for="i3"></label></div></div>
+    <div class="qrow"><div class="qb"><div class="qt">잦은 속쓰림·역류·위식도역류질환(GERD)</div></div><div class="tg"><input type="checkbox" id="i4"><label for="i4"></label></div></div>
+    <div class="qrow"><div class="qb"><div class="qt">활성·조절 안 되는 궤양성 대장염·크론병</div></div><div class="tg"><input type="checkbox" id="i5"><label for="i5"></label></div></div>
+    <div class="qrow"><div class="qb"><div class="qt">비만 수술 (최근 12개월)</div></div><div class="tg"><input type="checkbox" id="i6"><label for="i6"></label></div></div>
+  </div>
+
+  <!-- Q10 처방약 -->
+  <div class="card box-q10" style="display:none;border-left:4px solid #d47e00">
+    <div class="sh"><span class="sh-icon">💊</span><span class="sh-title">처방약 세부 확인</span></div>
+    <div class="qrow"><div class="qb"><div class="qt">복용 중인 처방약이 판단력·균형감각·의식에 영향을 줄 수 있다</div></div><div class="tg"><input type="checkbox" id="j1"><label for="j1"></label></div></div>
+    <div class="qrow"><div class="qb"><div class="qt">수중에서 약물 흡수·효과 변화가 우려되는 처방약 복용 중</div></div><div class="tg"><input type="checkbox" id="j2"><label for="j2"></label></div></div>
+  </div>
+
+  <button class="btn btn-blue" onclick="step2result()">결과 확인 →</button>
+  <button class="btn btn-ghost" onclick="goback()">← 이전으로</button>
+</div>
+
+<!-- ===== STEP 3 ===== -->
+<div class="screen" id="s3">
+
+  <div class="rc" id="r-safe" style="display:none">
+    <span class="ri">✅</span>
+    <div class="rt" style="color:#1a8a4a">다이빙 적합</div>
+    <div class="rs">해당 항목이 없습니다.<br>의사 평가 없이 서명 후 교육 참가가 가능합니다.</div>
+    <div class="rbox">
+      <h4>다이빙 전 권장 사항</h4>
+      <ul>
+        <li>전날 음주 금지</li>
+        <li>충분한 수면(7시간 이상) 및 수분 섭취</li>
+        <li>컨디션 저하 시 당일 다이빙 취소</li>
+        <li>다이빙 후 12~24시간 내 항공기 탑승 금지</li>
+        <li>연 1회 이상 정기 건강검진 유지</li>
+      </ul>
     </div>
+    <div class="disc">DMSC Diver Medical Participant Questionnaire (UHMS·DAN·UCSD, 버전 2026-01-01, © DMSC 2026)<br>자가진단 참고용이며 의학적 진단을 대체하지 않습니다.</div>
+    <button class="retry" onclick="reset()">↩ 다시 진단하기</button>
+  </div>
 
-    <!-- 임신 -->
-    <div class="card">
-      <div class="section-header">
-        <span class="sec-icon">⚠️</span>
-        <span class="sec-title">여성 해당자</span>
-      </div>
-      <div class="preg-note">임신 중이거나 임신을 시도 중인 경우 다이빙하지 마십시오.<br>(DMSC 원문 명시: "do not dive")</div>
-      <div class="question">
-        <span class="q-num">—</span>
-        <span class="q-text">현재 임신 중이거나 임신을 시도 중이다</span>
-        <div class="toggle"><input type="checkbox" id="p1" onchange="s1update()"><label for="p1"></label></div>
-      </div>
+  <div class="rc" id="r-preg" style="display:none">
+    <span class="ri">🚫</span>
+    <div class="rt" style="color:#c0392b">다이빙 금지</div>
+    <div class="rs">임신 중 또는 임신 시도 중에는<br>스쿠버다이빙을 하지 마십시오.</div>
+    <div class="rbox">
+      <h4>안내</h4>
+      <ul>
+        <li>DMSC 원문 명시: "do not dive"</li>
+        <li>수중 압력·용존 질소가 태아에 미치는 영향 불명확</li>
+        <li>출산 및 완전 회복 후 재평가 필요</li>
+      </ul>
     </div>
+    <div class="disc">DMSC Diver Medical Participant Questionnaire (UHMS·DAN·UCSD, 버전 2026-01-01, © DMSC 2026)<br>자가진단 참고용이며 의학적 진단을 대체하지 않습니다.</div>
+    <button class="retry" onclick="reset()">↩ 다시 진단하기</button>
+  </div>
 
-    <!-- 기본 10개 -->
-    <div class="card">
-      <div class="section-header">
-        <span class="sec-icon">📋</span>
-        <span class="sec-title">기본 건강 항목</span>
-        <span class="sec-badge">10개 질문</span>
-      </div>
-
-      <div class="question">
-        <span class="q-num">1</span>
-        <div style="flex:1">
-          <div class="q-text">폐·호흡·심장·혈액 문제로 정상적인 신체·정신 활동에 지장을 받은 적 있다</div>
-        </div>
-        <div class="toggle"><input type="checkbox" id="q1" onchange="s1update()"><label for="q1"></label></div>
-      </div>
-
-      <div class="question">
-        <span class="q-num">2</span>
-        <div style="flex:1">
-          <div class="q-text"><b>45세 이상</b>이다</div>
-          <div class="q-sub">→ 해당 시 추가 항목 자동 표시</div>
-        </div>
-        <div class="toggle"><input type="checkbox" id="q2" onchange="s1update()"><label for="q2"></label></div>
-      </div>
-
-      <div class="question">
-        <span class="q-num">3</span>
-        <div style="flex:1">
-          <div class="q-text">보통 수준의 운동이 <b>불가능</b>하다</div>
-          <div class="q-sub">예: 1.6km 14분 내 보행 / 200m 수영 무휴식<br>또는 최근 12개월 내 건강 이유로 정상 활동 불가</div>
-        </div>
-        <div class="toggle"><input type="checkbox" id="q3" onchange="s1update()"><label for="q3"></label></div>
-      </div>
-
-      <div class="question">
-        <span class="q-num">4</span>
-        <div style="flex:1">
-          <div class="q-text">눈·귀·비강·부비동 관련 문제가 있다</div>
-        </div>
-        <div class="toggle"><input type="checkbox" id="q4" onchange="s1update()"><label for="q4"></label></div>
-      </div>
-
-      <div class="question">
-        <span class="q-num">5</span>
-        <div style="flex:1">
-          <div class="q-text">최근 12개월 내 수술을 받았다</div>
-          <div class="q-sub">또는 과거 수술로 인한 현재 진행 중인 문제가 있다</div>
-        </div>
-        <div class="toggle"><input type="checkbox" id="q5" onchange="s1update()"><label for="q5"></label></div>
-      </div>
-
-      <div class="question">
-        <span class="q-num">6</span>
-        <div style="flex:1">
-          <div class="q-text">의식 소실·편두통·발작·뇌졸중·중증 두부손상 경험이 있다</div>
-          <div class="q-sub">또는 지속적 신경계 손상·질환이 있다</div>
-        </div>
-        <div class="toggle"><input type="checkbox" id="q6" onchange="s1update()"><label for="q6"></label></div>
-      </div>
-
-      <div class="question">
-        <span class="q-num">7</span>
-        <div style="flex:1">
-          <div class="q-text">심리·인격·공황·약물·알코올 문제로 최근 5년 내 치료를 받았다</div>
-          <div class="q-sub">또는 학습·발달 장애 진단을 받은 적 있다</div>
-        </div>
-        <div class="toggle"><input type="checkbox" id="q7" onchange="s1update()"><label for="q7"></label></div>
-      </div>
-
-      <div class="question">
-        <span class="q-num">8</span>
-        <div style="flex:1">
-          <div class="q-text">허리 문제·탈장·궤양·당뇨가 있다</div>
-        </div>
-        <div class="toggle"><input type="checkbox" id="q8" onchange="s1update()"><label for="q8"></label></div>
-      </div>
-
-      <div class="question">
-        <span class="q-num">9</span>
-        <div style="flex:1">
-          <div class="q-text">위·장 문제가 있다</div>
-          <div class="q-sub">최근 설사 포함</div>
-        </div>
-        <div class="toggle"><input type="checkbox" id="q9" onchange="s1update()"><label for="q9"></label></div>
-      </div>
-
-      <div class="question">
-        <span class="q-num">10</span>
-        <div style="flex:1">
-          <div class="q-text">처방약을 복용 중이다</div>
-          <div class="q-sub">피임약 및 항말라리아제(메플로퀸 제외)는 해당 없음</div>
-        </div>
-        <div class="toggle"><input type="checkbox" id="q10" onchange="s1update()"><label for="q10"></label></div>
-      </div>
-
+  <div class="rc" id="r-warn" style="display:none">
+    <span class="ri">⚠️</span>
+    <div class="rt" style="color:#d47e00">의사 평가 필요</div>
+    <div class="rs">아래 항목이 확인되었습니다.<br>다이빙 전 의사의 평가와 승인이 필요합니다.</div>
+    <div class="wbox">
+      <h4>해당 항목</h4>
+      <ul id="wlist"></ul>
     </div>
-
-    <button class="btn-primary" onclick="goStep2()">다음 단계 →</button>
-
-  </div><!-- /screen1 -->
-
-  <!-- ── STEP 2: 세부 확인 (YES 항목만 표시) ── -->
-  <div class="screen" id="screen2">
-
-    <div class="progress-wrap">
-      <div class="prog-label">
-        <span>2단계 · 세부 확인</span>
-        <span>의사 상담 필요 여부 판단</span>
-      </div>
-      <div class="prog-bar"><div class="prog-fill" style="width:66%"></div></div>
+    <div class="rbox">
+      <h4>다음 단계</h4>
+      <ul>
+        <li>DMSC 의사 평가 양식(3페이지) 출력 후 의사에게 지참</li>
+        <li>DAN 다이빙 의학 전문의 상담 이용 가능</li>
+        <li>의사 승인서를 강사에게 제출 후 교육 참가</li>
+        <li>※ 의사는 승인/불승인만 표기, 별도 조건·제한 기재 시 불승인으로 간주</li>
+      </ul>
     </div>
+    <div class="disc">DMSC Diver Medical Participant Questionnaire (UHMS·DAN·UCSD, 버전 2026-01-01, © DMSC 2026)<br>자가진단 참고용이며 의학적 진단을 대체하지 않습니다.</div>
+    <button class="retry" onclick="reset()">↩ 다시 진단하기</button>
+  </div>
 
-    <div class="card" style="border-left:4px solid var(--warn)">
-      <div class="section-header">
-        <span class="sec-icon">⚠️</span>
-        <span class="sec-title">해당 항목 세부 확인</span>
-      </div>
-      <p style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:4px">
-        아래는 YES로 체크한 항목의 세부 내용입니다.<br>
-        <b style="color:var(--text)">본인 상황에 해당하는 항목이 있으면 의사 평가가 필요합니다.</b>
-      </p>
-    </div>
+</div>
 
-    <div id="box-detail"><!-- JS로 동적 생성 --></div>
-
-    <button class="btn-primary" onclick="goResult()">결과 확인 →</button>
-    <button class="btn-secondary" onclick="goBack1()">← 이전으로</button>
-
-  </div><!-- /screen2 -->
-
-  <!-- ── STEP 3: 결과 ── -->
-  <div class="screen" id="screen3">
-    <div class="progress-wrap">
-      <div class="prog-label"><span>완료</span><span>3/3 단계</span></div>
-      <div class="prog-bar"><div class="prog-fill" style="width:100%"></div></div>
-    </div>
-
-    <!-- 결과: 적합 -->
-    <div class="result-card" id="r-safe" style="display:none">
-      <span class="result-icon">✅</span>
-      <div class="result-title" style="color:var(--safe)">다이빙 적합</div>
-      <div class="result-sub">모든 기본 항목에 해당 없음이 확인되었습니다.<br>의사 평가 없이 서명 후 교육 참가가 가능합니다.</div>
-      <div class="result-box">
-        <h4>다이빙 전 권장 사항</h4>
-        <ul>
-          <li>전날 음주 금지</li>
-          <li>충분한 수면(7시간 이상) 및 수분 섭취</li>
-          <li>컨디션 저하 시 당일 다이빙 취소</li>
-          <li>다이빙 후 12~24시간 내 항공기 탑승 금지</li>
-          <li>연 1회 이상 정기 건강검진 유지</li>
-        </ul>
-      </div>
-      <div class="disclaimer">
-        DMSC Diver Medical Participant Questionnaire<br>
-        (UHMS · DAN · UCSD 공동제정, 버전 2022-02-01, © DMSC 2020)<br>
-        자가진단 참고용이며 의학적 진단을 대체하지 않습니다.
-      </div>
-      <br><button class="retry-btn" onclick="reset()">↩ 다시 진단하기</button>
-    </div>
-
-    <!-- 결과: 임신 -->
-    <div class="result-card" id="r-preg" style="display:none">
-      <span class="result-icon">🚫</span>
-      <div class="result-title" style="color:var(--danger)">다이빙 금지</div>
-      <div class="result-sub">임신 중 또는 임신 시도 중에는<br>스쿠버다이빙을 하지 마십시오.</div>
-      <div class="result-box">
-        <h4>안내</h4>
-        <ul>
-          <li>DMSC 원문 명시: "do not dive"</li>
-          <li>수중 압력·용존 질소가 태아에 미치는 영향 불명확</li>
-          <li>출산 및 완전 회복 후 재평가 필요</li>
-        </ul>
-      </div>
-      <div class="disclaimer">
-        DMSC Diver Medical Participant Questionnaire<br>
-        (UHMS · DAN · UCSD 공동제정, 버전 2022-02-01, © DMSC 2020)<br>
-        자가진단 참고용이며 의학적 진단을 대체하지 않습니다.
-      </div>
-      <br><button class="retry-btn" onclick="reset()">↩ 다시 진단하기</button>
-    </div>
-
-    <!-- 결과: 의사 상담 -->
-    <div class="result-card" id="r-warn" style="display:none">
-      <span class="result-icon">⚠️</span>
-      <div class="result-title" style="color:var(--warn)">의사 평가 필요</div>
-      <div class="result-sub">해당 항목이 확인되었습니다.<br>DMSC 기준에 따라 의사의 평가 후 다이빙 여부를 결정하십시오.</div>
-      <div class="warn-box">
-        <h4>해당 항목</h4>
-        <ul id="warn-list"></ul>
-      </div>
-      <div class="result-box">
-        <h4>다음 단계</h4>
-        <ul>
-          <li>DMSC 의사 평가 양식(3페이지) 출력 후 의사에게 지참</li>
-          <li>DAN 다이빙 의학 전문의 상담 이용 가능</li>
-          <li>의사 승인서를 강사에게 제출 후 교육 참가</li>
-          <li>많은 조건이 치료 후 재평가 시 허가 가능</li>
-        </ul>
-      </div>
-      <div class="disclaimer">
-        DMSC Diver Medical Participant Questionnaire<br>
-        (UHMS · DAN · UCSD 공동제정, 버전 2022-02-01, © DMSC 2020)<br>
-        자가진단 참고용이며 의학적 진단을 대체하지 않습니다.
-      </div>
-      <br><button class="retry-btn" onclick="reset()">↩ 다시 진단하기</button>
-    </div>
-
-  </div><!-- /screen3 -->
-
-</div><!-- /container -->
-
+</div>
 <script>
-// 버블
-const bc=document.getElementById('bubbles');
-for(let i=0;i<18;i++){
-  const b=document.createElement('div');b.className='bubble';
-  const s=Math.random()*14+4;
-  b.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}%;animation-duration:${Math.random()*12+8}s;animation-delay:-${Math.random()*12}s`;
-  bc.appendChild(b);
-}
+const s2map = [
+  {id:'a1', label:'흉부·심장·판막 수술 / 삽입형 의료기기 / 기흉 / 만성 폐질환'},
+  {id:'a2', label:'천식·알레르기로 신체활동 제한 (최근 12개월)'},
+  {id:'a3', label:'협심증·심근경색·심부전·뇌졸중 / 심장약 복용'},
+  {id:'a4', label:'재발성 기관지염·폐기종'},
+  {id:'a5', label:'최근 30일 내 폐·심장 증상으로 활동 지장'},
+  {id:'b1', label:'[45세↑] 흡연·니코틴 사용'},
+  {id:'b2', label:'[45세↑] 고지혈증'},
+  {id:'b3', label:'[45세↑] 고혈압'},
+  {id:'b4', label:'[45세↑] 직계 가족 50세 이전 심장질환·뇌졸중'},
+  {id:'e1', label:'1.6km 14분 내 보행 불가'},
+  {id:'e2', label:'200m 수영 무휴식 완주 불가'},
+  {id:'e3', label:'최근 12개월 내 건강 이유로 정상 활동 불가'},
+  {id:'c1', label:'부비동 수술 (최근 6개월)'},
+  {id:'c2', label:'귀 질환·청력손실·균형 장애'},
+  {id:'c3', label:'재발성 부비동염 (최근 12개월)'},
+  {id:'c4', label:'안과 수술 (최근 3개월)'},
+  {id:'c5', label:'최근 치과·구강 시술 회복 중'},
+  {id:'f1', label:'최근 12개월 내 수술 (미회복)'},
+  {id:'f2', label:'과거 수술 관련 현재 합병증'},
+  {id:'d1', label:'의식 소실 동반 두부 손상 (최근 5년)'},
+  {id:'d2', label:'지속적 신경계 손상·질환 (삽화적·예측불가 기능 변화 포함)'},
+  {id:'d3', label:'재발성 편두통 / 편두통 예방약'},
+  {id:'d4', label:'실신·부분 의식 소실 (최근 5년)'},
+  {id:'d5', label:'간질·발작·경련 / 발작 예방약'},
+  {id:'g1', label:'심리·정신 문제로 정신과 치료'},
+  {id:'g2', label:'중증 우울증·자살 충동·공황발작·양극성 장애'},
+  {id:'g3', label:'지속 관리 필요 정신건강 / 학습·발달 장애 진단'},
+  {id:'g4', label:'약물·알코올 중독 치료 (최근 5년)'},
+  {id:'h1', label:'재발성 허리 문제 (최근 6개월)'},
+  {id:'h2', label:'허리·척추 수술 (최근 12개월)'},
+  {id:'h3', label:'당뇨 / 임신성 당뇨 (최근 12개월)'},
+  {id:'h4', label:'교정 안 된 탈장'},
+  {id:'h5', label:'활성 궤양·상처 / 궤양 수술 (최근 6개월)'},
+  {id:'i1', label:'장루 수술 후 수영 의학 허가 없음'},
+  {id:'i2', label:'의학적 개입 필요 탈수 (최근 7일)'},
+  {id:'i3', label:'위·장 궤양 / 궤양 수술 (최근 6개월)'},
+  {id:'i4', label:'잦은 역류·GERD'},
+  {id:'i5', label:'궤양성 대장염·크론병'},
+  {id:'i6', label:'비만 수술 (최근 12개월)'},
+  {id:'j1', label:'처방약이 판단력·균형·의식에 영향'},
+  {id:'j2', label:'수중 약물 효과 변화 우려'}
+];
 
-// BOX 세부 항목 데이터
-const boxData = {
-  q1: {
-    title: 'BOX A — 폐·호흡기·심장·혈액',
-    items: [
-      '흉부·심장·심장판막 수술 / 스텐트·심박조율기·신경자극기 등 삽입형 기기 / 기흉 / 만성 폐질환',
-      '천식·쌕쌕거림·심한 알레르기·건초열·기도 막힘으로 운동 제한 (최근 12개월)',
-      '협심증·운동 시 흉통·심부전·수중 폐부종·심근경색·뇌졸중 / 심장약 복용 중',
-      '재발성 기관지염으로 현재 기침 중 (최근 12개월) / 폐기종 진단',
-      '최근 30일 내 폐·호흡·심장·혈액 증상으로 활동 지장'
-    ]
-  },
-  q2: {
-    title: 'BOX B — 45세 이상 추가 확인',
-    items: [
-      '현재 흡연 중 또는 니코틴 제품 사용',
-      '고콜레스테롤혈증 (고지혈증)',
-      '고혈압',
-      '직계 가족 중 50세 이전 돌연사·심장질환·뇌졸중 (부정맥·관상동맥질환·심근병증 포함)'
-    ]
-  },
-  q3: {
-    title: '운동 능력 저하',
-    items: [
-      '1.6km를 14분 내 걷기 불가능',
-      '200m 수영을 쉬지 않고 완주 불가능',
-      '최근 12개월 내 건강·체력 이유로 정상 활동 불가'
-    ]
-  },
-  q4: {
-    title: 'BOX C — 귀·눈·부비동',
-    items: [
-      '부비동 수술 (최근 6개월)',
-      '귀 질환·귀 수술·청력손실·균형 장애',
-      '재발성 부비동염 (최근 12개월)',
-      '안과 수술 (최근 3개월)'
-    ]
-  },
-  q5: {
-    title: '최근 수술',
-    items: [
-      '최근 12개월 내 수술 경험',
-      '과거 수술로 인한 현재 진행 중인 문제'
-    ]
-  },
-  q6: {
-    title: 'BOX D — 신경계',
-    items: [
-      '의식 소실 동반 두부 손상 (최근 5년)',
-      '지속적 신경계 손상·질환',
-      '재발성 편두통 (최근 12개월) / 편두통 예방약 복용',
-      '실신·부분 의식 소실 (최근 5년)',
-      '간질·발작·경련 / 발작 예방약 복용'
-    ]
-  },
-  q7: {
-    title: 'BOX E — 정신건강',
-    items: [
-      '행동·정신·심리 문제로 의학적·정신과적 치료 중',
-      '중증 우울증·자살 충동·공황발작·조절 안 되는 양극성 장애',
-      '지속 관리·특별 편의가 필요한 정신건강 상태 / 학습·발달 장애',
-      '약물·알코올 중독 치료 (최근 5년)'
-    ]
-  },
-  q8: {
-    title: 'BOX F — 근골격·대사',
-    items: [
-      '일상 활동 제한하는 재발성 허리 문제 (최근 6개월)',
-      '허리·척추 수술 (최근 12개월)',
-      '약물 또는 식이 조절 당뇨 / 임신성 당뇨 (최근 12개월)',
-      '신체 활동 제한하는 교정되지 않은 탈장',
-      '활성·미치료 궤양·문제성 상처 / 궤양 수술 (최근 6개월)'
-    ]
-  },
-  q9: {
-    title: 'BOX G — 위장·소화기',
-    items: [
-      '장루 수술 후 수영·신체활동 의학 허가 없음',
-      '의학적 개입이 필요한 탈수 (최근 7일)',
-      '활성·미치료 위·장 궤양 / 궤양 수술 (최근 6개월)',
-      '잦은 속쓰림·역류·위식도역류질환(GERD)',
-      '활성·조절 안 되는 궤양성 대장염·크론병',
-      '비만 수술 (최근 12개월)'
-    ]
-  },
-  q10: {
-    title: '처방약 복용',
-    items: [
-      '현재 처방약 복용 중 (피임약 및 항말라리아제 메플로퀸 제외)',
-      '복용 약물이 판단력·균형감각·의식에 영향을 줄 수 있는 경우'
-    ]
-  }
+const boxMap = {
+  q1:'box-a', q2:'box-b', q3:'box-q3', q4:'box-c', q5:'box-q5',
+  q6:'box-d', q7:'box-e', q8:'box-f', q9:'box-g', q10:'box-q10'
 };
 
-// YES 항목 추적
-let yesQs = [];
-let pregYes = false;
+function show(id){document.getElementById(id).classList.add('on')}
+function hide(id){document.getElementById(id).classList.remove('on')}
+function el(id){return document.getElementById(id)}
+function checked(id){return el(id).checked}
 
-function s1update() {
-  let checked = 0;
-  const ids = ['p1','q1','q2','q3','q4','q5','q6','q7','q8','q9','q10'];
-  ids.forEach(id => { if(document.getElementById(id).checked) checked++; });
-  document.getElementById('s1-counter').textContent = `${checked} / 11 항목`;
-  document.getElementById('s1-prog').style.width = (checked/11*100)+'%';
-}
-
-function goStep2() {
-  pregYes = document.getElementById('p1').checked;
-
-  // 임신이면 바로 결과로
-  if(pregYes) {
-    showScreen('screen3');
-    setDot(3);
-    document.getElementById('r-preg').style.display='block';
-    window.scrollTo({top:0,behavior:'smooth'});
-    return;
+function step1next(){
+  if(checked('p1')){
+    hide('s1'); show('s3');
+    el('r-preg').style.display='block';
+    window.scrollTo({top:0,behavior:'smooth'}); return;
   }
-
-  yesQs = [];
-  ['q1','q2','q3','q4','q5','q6','q7','q8','q9','q10'].forEach(id => {
-    if(document.getElementById(id).checked) yesQs.push(id);
-  });
-
-  // 모두 NO면 바로 적합
-  if(yesQs.length === 0) {
-    showScreen('screen3');
-    setDot(3);
-    document.getElementById('r-safe').style.display='block';
-    window.scrollTo({top:0,behavior:'smooth'});
-    return;
+  const yes=[];
+  ['q1','q2','q3','q4','q5','q6','q7','q8','q9','q10'].forEach(id=>{if(checked(id)) yes.push(id);});
+  if(yes.length===0){
+    hide('s1'); show('s3');
+    el('r-safe').style.display='block';
+    window.scrollTo({top:0,behavior:'smooth'}); return;
   }
-
-  // YES 있으면 2단계
-  buildBoxDetail();
-  showScreen('screen2');
-  setDot(2);
+  document.querySelectorAll('#s2 .card[class*="box-"]').forEach(c=>c.style.display='none');
+  yes.forEach(id=>{document.querySelectorAll('#s2 .'+boxMap[id]).forEach(c=>c.style.display='block');});
+  hide('s1'); show('s2');
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-function buildBoxDetail() {
-  const container = document.getElementById('box-detail');
-  container.innerHTML = '';
-  yesQs.forEach(id => {
-    const d = boxData[id];
-    if(!d) return;
-    const div = document.createElement('div');
-    div.className = 'box-card';
-    div.innerHTML = `
-      <div class="box-title">▸ ${d.title}</div>
-      <div class="box-desc">아래 중 본인에게 해당하는 항목이 있으면 의사 평가가 필요합니다.</div>
-      <ul class="box-items">${d.items.map(i=>`<li>${i}</li>`).join('')}</ul>
-    `;
-    container.appendChild(div);
-  });
-}
-
-function goResult() {
-  showScreen('screen3');
-  setDot(3);
-
-  // warn 목록 생성
-  const warnItems = yesQs.map(id => boxData[id]?.title).filter(Boolean);
-  document.getElementById('warn-list').innerHTML = warnItems.map(t=>`<li>${t}</li>`).join('');
-  document.getElementById('r-warn').style.display='block';
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-
-function goBack1() {
-  showScreen('screen1');
-  setDot(1);
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-
-function showScreen(id) {
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
-
-function setDot(step) {
-  for(let i=1;i<=3;i++){
-    const dot = document.getElementById('dot'+i);
-    const line = document.getElementById('line'+i);
-    if(i < step){ dot.className='step-dot done'; if(line) line.className='step-line done'; }
-    else if(i === step){ dot.className='step-dot active'; }
-    else { dot.className='step-dot inactive'; if(line) line.className='step-line'; }
+function step2result(){
+  const flagged=[];
+  s2map.forEach(({id,label})=>{const e=el(id);if(e&&e.checked) flagged.push(label);});
+  hide('s2'); show('s3');
+  if(flagged.length===0){
+    el('r-safe').style.display='block';
+  } else {
+    el('wlist').innerHTML=flagged.map(t=>`<li>${t}</li>`).join('');
+    el('r-warn').style.display='block';
   }
-}
-
-function reset() {
-  ['p1','q1','q2','q3','q4','q5','q6','q7','q8','q9','q10'].forEach(id=>{
-    document.getElementById(id).checked=false;
-  });
-  ['r-safe','r-preg','r-warn'].forEach(id=>document.getElementById(id).style.display='none');
-  document.getElementById('warn-list').innerHTML='';
-  yesQs=[];pregYes=false;
-  showScreen('screen1');
-  setDot(1);
-  s1update();
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-s1update();
+function goback(){hide('s2'); show('s1'); window.scrollTo({top:0,behavior:'smooth'});}
+
+function reset(){
+  document.querySelectorAll('input[type=checkbox]').forEach(c=>c.checked=false);
+  ['r-safe','r-preg','r-warn'].forEach(id=>el(id).style.display='none');
+  el('wlist').innerHTML='';
+  hide('s2'); hide('s3'); show('s1');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
 </script>
 </body>
 </html>
